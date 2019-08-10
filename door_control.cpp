@@ -22,6 +22,20 @@ DoorController * controller;
 VariableSpeedStarter * starter;
 
 
+/** Arduino loop function */
+void loop() {
+    timer.update();
+}
+
+/** 1ms loop function */
+void ms_loop() {
+    open->Update1Ms();
+    close->Update1Ms();
+    stop->Update1Ms();
+    opened->Update1Ms();
+    closed->Update1Ms();
+}
+
 /** Arduino setup function */
 void setup() {
     logger = new Logger();
@@ -37,19 +51,8 @@ void setup() {
     starter = new VariableSpeedStarter(config.starter, logger);
 
     logger->log(Logger::INFO, "Initializing Door Controller...");
-    controller = new DoorController(starter, opened, closed, logger);
+    controller = new DoorController(starter, stop, opened, closed, &timer, logger);
     controller->RegisterInputCallbacks(open, close, stop, opened, closed);
 
-}
-
-
-/** Arduino loop function */
-void loop() {
-    timer.update();
-
-    open->Update1Ms();
-    close->Update1Ms();
-    stop->Update1Ms();
-    opened->Update1Ms();
-    closed->Update1Ms();
+    timer.every(1, ms_loop);
 }

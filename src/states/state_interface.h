@@ -18,7 +18,7 @@ public:
     virtual void CloseButtonPushed(DoorController * ctrl) {};
     virtual void CloseButtonReleased(DoorController * ctrl) {};
 
-    virtual void StopButtonPushed(DoorController * ctrl) {};
+    virtual void StopButtonPushed(DoorController * ctrl) = 0;
     virtual void StopButtonReleased(DoorController * ctrl) {};
 
     virtual void GateClosed(DoorController * ctrl) {};

@@ -6,18 +6,23 @@
 class PushButton;
 class Logger;
 class VariableSpeedStarter;
+class Timer;
 
 class DoorController {
 public:
 
-    explicit DoorController(VariableSpeedStarter * starter, PushButton * opened, PushButton * closed, Logger *logger);
+    explicit DoorController(VariableSpeedStarter * starter, PushButton * stop, PushButton * opened, PushButton * closed, Timer * timer, Logger *logger);
 
     void RegisterInputCallbacks(PushButton * open, PushButton * close, PushButton * stop, PushButton * opened, PushButton * closed);
 
 
     void ChangeState(StateContainer::States state);
+    bool IsGateOpened();
+    bool IsGateClosed();
     void OpenGate();
     void CloseGate();
+    void EmergencyStopGate();
+    void StopGate();
 
 private:
     void OpenButtonPushed();
@@ -40,11 +45,14 @@ private:
     static void closed_activated_callback(void *ptr);
     static void opened_activated_callback(void *ptr);
 
-    void Initialize(PushButton * opened, PushButton * closed);
+    void Initialize();
 
+    PushButton * stop_button_;
+    PushButton * opened_;
+    PushButton * closed_;
     VariableSpeedStarter * starter_;
+    StateContainer states_;
     Logger * logger_;
 
     StateInterface * current_state_;
-    StateContainer states_;
 };

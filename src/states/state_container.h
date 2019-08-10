@@ -2,12 +2,14 @@
 
 #include "state_interface.h"
 
+class Timer;
+
 class StateContainer {
 
 public:
     enum States {CLOSED, OPENED, OPENING, CLOSING, STOP, EMERGENCY_STOP};
 
-    explicit StateContainer();
+    explicit StateContainer(Timer * timer);
     StateInterface * GetState(States state);
 
 private:

@@ -4,17 +4,17 @@
 #include "../input/push_button.h"
 #include "../output/variable_speed_starter.h"
 
-DoorController::DoorController(VariableSpeedStarter * starter, PushButton * opened, PushButton * closed, Logger * logger) :
-        starter_(starter), logger_(logger) {
+DoorController::DoorController(VariableSpeedStarter * starter, PushButton * stop, PushButton * opened, PushButton * closed, Timer * timer, Logger * logger) :
+        stop_button_(stop), opened_(opened), closed_(closed), starter_(starter), states_(timer), logger_(logger) {
     // Preload all states
-    Initialize(opened, closed);
+    Initialize();
 }
 
-void DoorController::Initialize(PushButton * opened, PushButton * closed) {
-    if (opened->IsPushed()) {
+void DoorController::Initialize() {
+    if (IsGateOpened()) {
         logger_->log(Logger::INFO, "Gate seems to be fully opened --> start in state OPENED");
         current_state_ = states_.GetState(StateContainer::OPENED);
-    } else if (closed->IsPushed()) {
+    } else if (IsGateClosed()) {
         logger_->log(Logger::INFO, "Gate seems to be fully closed --> start in state CLOSED");
         current_state_ = states_.GetState(StateContainer::CLOSED);
     } else {
@@ -22,6 +22,16 @@ void DoorController::Initialize(PushButton * opened, PushButton * closed) {
         current_state_ = states_.GetState(StateContainer::STOP);
     }
     current_state_->Enter(this);
+}
+
+void DoorController::ChangeState(StateContainer::States state) {
+    StateInterface * old_state = current_state_;
+    StateInterface * new_state = states_.GetState(state);
+    old_state->Exit(this);
+    new_state->Enter(this);
+    logger_->log(Logger::INFO, "State Change " + old_state->GetName() + " -> " + new_state->GetName());
+    current_state_ = new_state;
+
 }
 
 void DoorController::RegisterInputCallbacks(PushButton * open, PushButton * close, PushButton * stop, PushButton * opened, PushButton * closed) {
@@ -35,12 +45,28 @@ void DoorController::RegisterInputCallbacks(PushButton * open, PushButton * clos
     opened->Pushed()->SetCallback(opened_activated_callback, this);
 }
 
+bool DoorController::IsGateOpened() {
+    return opened_->IsPushed();
+}
+
+bool DoorController::IsGateClosed() {
+    return closed_->IsPushed();
+}
+
 void DoorController::OpenGate() {
     starter_->fwd();
 }
 
 void DoorController::CloseGate() {
     starter_->rev();
+}
+
+void DoorController::EmergencyStopGate() {
+    starter_->emergency_stop();
+}
+
+void DoorController::StopGate() {
+    starter_->stop();
 }
 
 void DoorController::OpenButtonPushed() {

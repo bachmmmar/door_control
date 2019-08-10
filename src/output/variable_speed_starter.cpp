@@ -24,16 +24,16 @@ void VariableSpeedStarter::setup() {
 
 void VariableSpeedStarter::fwd() {
     logger_->log(Logger::DEBUG, "Rotate Motor FWD");
-    digitalWrite(config_.rev_pin, LOW);
     digitalWrite(config_.extflt_pin, HIGH);
     digitalWrite(config_.fwd_pin, HIGH);
+    digitalWrite(config_.rev_pin, LOW);
 }
 
 void VariableSpeedStarter::rev() {
     logger_->log(Logger::DEBUG, "Rotate Motor REV");
-    digitalWrite(config_.fwd_pin, LOW);
     digitalWrite(config_.extflt_pin, HIGH);
     digitalWrite(config_.rev_pin, HIGH);
+    digitalWrite(config_.fwd_pin, LOW);
 }
 
 void VariableSpeedStarter::stop() {

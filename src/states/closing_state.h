@@ -2,11 +2,11 @@
 
 #include "state_interface.h"
 
-class ClosedState : public StateInterface {
+class ClosingState : public StateInterface {
 
 public:
-    explicit ClosedState();
-    ~ClosedState() override = default;
+    explicit ClosingState();
+    ~ClosingState() override = default;
 
     void Enter(DoorController * ctrl) override;
     void Exit(DoorController * ctrl) override;
@@ -14,6 +14,8 @@ public:
 
 
     /* Optional functions */
+    void GateClosed(DoorController * ctrl) override;
     void OpenButtonPushed(DoorController * ctrl) override;
+    void CloseButtonReleased(DoorController * ctrl) override;
 };
 
