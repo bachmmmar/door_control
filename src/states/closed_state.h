@@ -15,5 +15,6 @@ public:
 
     /* Optional functions */
     void OpenButtonPushed(DoorController * ctrl) override;
+    void MultifunctionButtonPushed(DoorController * ctrl) override;
 };
 

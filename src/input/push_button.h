@@ -22,6 +22,9 @@ public:
     bool IsPushed();
 
 private:
+
+    bool RawButtonIsPushed();
+
     void setup();
     const String GetInputStateAsString(bool state) const;
 
@@ -32,4 +35,7 @@ private:
     bool last_state_;
 
     const PushButtonConfig & config_;
+
+    int debounce_counter_;
+    bool debounce_state_;
 };

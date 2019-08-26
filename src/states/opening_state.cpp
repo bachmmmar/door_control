@@ -24,6 +24,11 @@ void OpeningState::CloseButtonPushed(DoorController * ctrl) {
     ctrl->ChangeState(StateContainer::STOP);
 };
 
+void OpeningState::MultifunctionButtonPushed(DoorController * ctrl) {
+    ctrl->StopGate();
+    ctrl->ChangeState(StateContainer::STOP);
+};
+
 void OpeningState::GateOpened(DoorController * ctrl) {
     ctrl->StopGate();
     ctrl->ChangeState(StateContainer::OPENED);

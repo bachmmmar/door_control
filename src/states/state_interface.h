@@ -18,6 +18,9 @@ public:
     virtual void CloseButtonPushed(DoorController * ctrl) {};
     virtual void CloseButtonReleased(DoorController * ctrl) {};
 
+    virtual void MultifunctionButtonPushed(DoorController * ctrl) {};
+    virtual void MultifunctionButtonReleased(DoorController * ctrl) {};
+
     virtual void StopButtonPushed(DoorController * ctrl) = 0;
     virtual void StopButtonReleased(DoorController * ctrl) {};
 

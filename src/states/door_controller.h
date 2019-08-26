@@ -13,7 +13,8 @@ public:
 
     explicit DoorController(VariableSpeedStarter * starter, PushButton * stop, PushButton * opened, PushButton * closed, Timer * timer, Logger *logger);
 
-    void RegisterInputCallbacks(PushButton * open, PushButton * close, PushButton * stop, PushButton * opened, PushButton * closed);
+    void RegisterInputCallbacks(PushButton * open, PushButton * close, PushButton * stop,
+            PushButton * multifunction, PushButton * opened, PushButton * closed);
 
 
     void ChangeState(StateContainer::States state);
@@ -33,6 +34,9 @@ private:
     void StopButtonPushed();
     void StopButtonReleased();
 
+    void MultifunctionButtonPushed();
+    void MultifunctionButtonReleased();
+
     void GateClosed();
     void GateOpened();
 
@@ -42,6 +46,9 @@ private:
     static void close_released_callback(void *ptr);
     static void stop_pushed_callback(void *ptr);
     static void stop_released_callback(void *ptr);
+    static void multifunction_pushed_callback(void *ptr);
+    static void multifunction_released_callback(void *ptr);
+
     static void closed_activated_callback(void *ptr);
     static void opened_activated_callback(void *ptr);
 

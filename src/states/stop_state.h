@@ -18,5 +18,6 @@ public:
     void CloseButtonPushed(DoorController * ctrl) override;
     void GateClosed(DoorController * ctrl) override;
     void GateOpened(DoorController * ctrl) override;
+    void MultifunctionButtonPushed(DoorController * ctrl) override;
 };
 

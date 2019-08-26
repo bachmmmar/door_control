@@ -34,13 +34,14 @@ void DoorController::ChangeState(StateContainer::States state) {
 
 }
 
-void DoorController::RegisterInputCallbacks(PushButton * open, PushButton * close, PushButton * stop, PushButton * opened, PushButton * closed) {
+void DoorController::RegisterInputCallbacks(PushButton * open, PushButton * close, PushButton * stop, PushButton * multifunction, PushButton * opened, PushButton * closed) {
     open->Pushed()->SetCallback(open_pushed_callback, this);
     close->Pushed()->SetCallback(close_pushed_callback, this);
     close->Released()->SetCallback(close_released_callback, this);
     stop->Pushed()->SetCallback(stop_pushed_callback, this);
     stop->Released()->SetCallback(stop_released_callback, this);
-
+    multifunction->Pushed()->SetCallback(multifunction_pushed_callback, this);
+    multifunction->Released()->SetCallback(multifunction_released_callback, this);
     closed->Pushed()->SetCallback(closed_activated_callback, this);
     opened->Pushed()->SetCallback(opened_activated_callback, this);
 }
@@ -90,6 +91,14 @@ void DoorController::StopButtonReleased() {
     current_state_->StopButtonReleased(this);
 }
 
+void DoorController::MultifunctionButtonPushed() {
+    current_state_->MultifunctionButtonPushed(this);
+}
+
+void DoorController::MultifunctionButtonReleased() {
+    current_state_->MultifunctionButtonReleased(this);
+}
+
 
 void DoorController::GateClosed() {
     current_state_->GateClosed(this);
@@ -120,6 +129,14 @@ void DoorController::stop_pushed_callback(void *ptr) {
 
 void DoorController::stop_released_callback(void *ptr) {
     static_cast<DoorController*>(ptr)->StopButtonReleased();
+}
+
+void DoorController::multifunction_pushed_callback(void *ptr) {
+    static_cast<DoorController*>(ptr)->MultifunctionButtonPushed();
+}
+
+void DoorController::multifunction_released_callback(void *ptr) {
+    static_cast<DoorController*>(ptr)->MultifunctionButtonReleased();
 }
 
 void DoorController::closed_activated_callback(void *ptr) {

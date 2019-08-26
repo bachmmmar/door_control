@@ -33,6 +33,13 @@ void StopState::CloseButtonPushed(DoorController * ctrl) {
     }
 };
 
+void StopState::MultifunctionButtonPushed(DoorController * ctrl) {
+    if (!ctrl->IsGateClosed()) {
+        ctrl->CloseGate();
+        ctrl->ChangeState(StateContainer::CLOSING);
+    }
+};
+
 void StopState::GateClosed(DoorController * ctrl) {
     ctrl->StopGate();
     ctrl->ChangeState(StateContainer::CLOSED);

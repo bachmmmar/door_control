@@ -15,6 +15,7 @@ Logger * logger;
 PushButton * open;
 PushButton * close;
 PushButton * stop;
+PushButton * multifunction;
 PushButton * opened;
 PushButton * closed;
 
@@ -32,6 +33,7 @@ void ms_loop() {
     open->Update1Ms();
     close->Update1Ms();
     stop->Update1Ms();
+    multifunction->Update1Ms();
     opened->Update1Ms();
     closed->Update1Ms();
 }
@@ -43,6 +45,7 @@ void setup() {
     open = new PushButton(config.open_button, logger);
     close = new PushButton(config.close_button, logger);
     stop = new PushButton(config.stop_button, logger);
+    multifunction = new PushButton(config.multifunction_button, logger);
 
     opened = new PushButton(config.opened_contact, logger);
     closed = new PushButton(config.closed_contact, logger);
@@ -52,7 +55,7 @@ void setup() {
 
     logger->log(Logger::INFO, "Initializing Door Controller...");
     controller = new DoorController(starter, stop, opened, closed, &timer, logger);
-    controller->RegisterInputCallbacks(open, close, stop, opened, closed);
+    controller->RegisterInputCallbacks(open, close, stop, multifunction, opened, closed);
 
-    timer.every(1, ms_loop);
+    timer.every(2, ms_loop);
 }
