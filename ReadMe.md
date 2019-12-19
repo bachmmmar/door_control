@@ -24,7 +24,7 @@ The images below are showing the final hardware and a drawing with the pin descr
 
 | final            | drawing           |
 | ---            | ---                 |
-| ![breadboard circuit](./final_board.jpg) | ![breadboard circuit](./schematic/drawing_bb.png) |
+| ![breadboard circuit](./doc/final_board.jpg) | ![breadboard circuit](./schematic/drawing_bb.png) |
 
 The Shematic was done with Fritzing. 
 
@@ -40,8 +40,11 @@ The block diagram shows the structure of the Software.
 ![block diagram](./schematic/block_diagram.png)
 
 The inputs are periodically (driven by timer) retrieved. All inputs are simple push buttons or contacts which can be pushed(closed) or released(open). 
-These pushed/released events are communicated by using callbacks to the State Machine. The statemachine then controls the four outputs for the DE1 Variable Speed Starter.
-Along that a logging infrastructure collects all log messages with severities and outputs it on terminal
+These pushed/released events are communicated by using callbacks to the State Machine. The statemachine then controls the four outputs for the DE1 Variable Speed Starter. For details see the state diagram below.
+
+![block diagram](./doc/States.png)
+
+Along that a logging infrastructure collects all log messages with severities and outputs it on terminal.
 
 The Project can be compiled with the [Arduino App](https://www.arduino.cc/download) or by using 
 [CLion](https://www.jetbrains.com/clion/). This is why the project folder contains all the CMake files.
